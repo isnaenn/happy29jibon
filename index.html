@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Jibon</title>
+
+  <!-- Google Fonts untuk Tipografi Estetik & Romantis -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Global Reset & Styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #2c2c2c;
+      overflow: hidden;
+    }
+
+    /* Outer Wrapper Landscape Canvas */
+    .app-viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    /* Container HP/Tablet/Desktop Frame Landscape 16:9 Aspect Ratio */
+    .app-container {
+      width: 100%;
+      max-width: 960px;
+      height: 100%;
+      max-height: 540px;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+      background-color: #5c181d; /* Theme Primary Color */
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Base Slide Styles */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 45px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scale(0.96);
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      z-index: 10;
+    }
+
+    /* Buttons Styling */
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 30px;
+      background-color: #ffffff;
+      color: #5c181d;
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #ebd8c3;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+    }
+
+    .btn-dark {
+      background-color: #5c181d;
+      color: #ebd8c3;
+    }
+    .btn-dark:hover {
+      background-color: #421014;
+      color: #ffffff;
+    }
+
+    /* SLIDE 1: Cover */
+    #slide1 {
+      background-color: #5c181d;
+      color: #f7ede2;
+    }
+    #slide1 h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      margin-bottom: 25px;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* SLIDE 2: Ucapan 01 (Landscape 2 Columns) */
+    #slide2 {
+      background-color: #5c181d;
+      color: #f7ede2;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 30px;
+      text-align: left;
+      align-items: center;
+    }
+
+    .s2-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slide-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .slide-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      opacity: 0.9;
+    }
+
+    .slide-date {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      margin-top: 4px;
+      margin-bottom: 18px;
+    }
+
+    .hbd-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .message-text {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      font-weight: 300;
+      opacity: 0.92;
+    }
+
+    .s2-right {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .couple-photo-frame {
+      width: 100%;
+      max-height: 380px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      border: 4px solid rgba(255, 255, 255, 0.15);
+      background: #421014;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .couple-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* SLIDE 3: Kalender 02 (Landscape Grid) */
+    #slide3 {
+      background-color: #5c181d;
+      color: #f7ede2;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 35px;
+      align-items: center;
+      text-align: left;
+    }
+
+    .calendar-card {
+      background: #ebd8c3;
+      color: #2c1a1d;
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+
+    .calendar-header {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+      text-align: center;
+      color: #5c181d;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .calendar-day-head {
+      font-weight: 700;
+      opacity: 0.6;
+      padding-bottom: 4px;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1.1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(92, 24, 29, 0.15);
+      border-radius: 5px;
+      font-weight: 500;
+    }
+
+    .calendar-day.highlight {
+      border: 2px solid #5c181d;
+      font-weight: 800;
+      background-color: rgba(92, 24, 29, 0.25);
+      color: #5c181d;
+      position: relative;
+    }
+
+    .calendar-day.highlight::after {
+      content: '!';
+      position: absolute;
+      top: 1px;
+      right: 3px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #5c181d;
+    }
+
+    /* SLIDE 4: Menu Pilihan Horizontal */
+    #slide4 {
+      background-color: #ebd8c3;
+      color: #5c181d;
+    }
+
+    .menu-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+    }
+
+    .menu-grid {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 25px;
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .menu-item {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 25px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(92, 24, 29, 0.08);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid transparent;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-8px);
+      border-color: #5c181d;
+      box-shadow: 0 14px 28px rgba(92, 24, 29, 0.18);
+    }
+
+    .menu-icon {
+      font-size: 2.5rem;
+    }
+
+    .menu-text {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* SLIDE 5 & 6: Message & Song Slide */
+    #slide5, #slide6 {
+      background-color: #ebd8c3;
+      color: #3a2528;
+      text-align: left;
+    }
+
+    .scrollable-content {
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 15px;
+      line-height: 1.8;
+    }
+
+    /* Custom Scrollbar */
+    .scrollable-content::-webkit-scrollbar {
+      width: 5px;
+    }
+    .scrollable-content::-webkit-scrollbar-track {
+      background: rgba(92, 24, 29, 0.05);
+      border-radius: 10px;
+    }
+    .scrollable-content::-webkit-scrollbar-thumb {
+      background: rgba(92, 24, 29, 0.3);
+      border-radius: 10px;
+    }
+
+    .vinyl-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 35px;
+      width: 100%;
+    }
+
+    .vinyl-anim {
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      animation: spin 7s linear infinite;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* SLIDE 7: Video Bunga */
+    #slide7 {
+      background-color: #5c181d;
+      color: #ffffff;
+    }
+
+    .video-frame {
+      width: 100%;
+      max-width: 550px;
+      height: 310px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* SLIDE 8: Polaroid Final */
+    #slide8 {
+      background-color: #5c181d;
+      color: #ffffff;
+    }
+
+    .polaroid-card {
+      background: #ffffff;
+      padding: 16px 16px 20px 16px;
+      border-radius: 8px;
+      color: #2c2c2c;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 20px;
+      align-items: center;
+      max-width: 760px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .polaroid-img-container {
+      width: 100%;
+      height: 250px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .polaroid-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .polaroid-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: #2c1a1d;
+    }
+
+    /* Hidden YouTube Player Wrapper */
+    #player-container {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Media Fallback Display */
+    .media-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      padding: 20px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-viewport">
+    <div class="app-container">
+      
+      <!-- SLIDE 1: Cover -->
+      <div class="slide active" id="slide1">
+        <h1>for Jibon</h1>
+        <button class="btn" onclick="goToSlide(2)">click here</button>
+      </div>
+
+      <!-- SLIDE 2: Ucapan 01 -->
+      <div class="slide" id="slide2">
+        <div class="s2-left">
+          <div class="slide-tag">01.</div>
+          <div class="slide-subtitle">Jibon</div>
+          <div class="slide-date">26/10/2026</div>
+          
+          <h2 class="hbd-title">Happy Birthday Baby</h2>
+          <p class="message-text">
+            Terimakasih sudah ada, bahkan di bagian yang hanya kamu ketahui dalam perjalanan hidup ini.<br/><br/>
+            terimakasih sudah terus memilih utuk bertahan dan menjalani hidup.
+          </p>
+          <div>
+            <button class="btn" onclick="goToSlide(3)">click here</button>
+          </div>
+        </div>
+
+        <div class="s2-right">
+          <div class="couple-photo-frame">
+            <img src="foto berdua.JPG" 
+                 onerror="this.onerror=null; this.src='WhatsApp Image 2026-10-26 at 20.13.39.jpeg';" 
+                 alt="Foto Pasangan Jibon & Gia" />
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: Kalender 02 -->
+      <div class="slide" id="slide3">
+        <div>
+          <div class="slide-tag">02.</div>
+          <div class="slide-subtitle" style="margin-bottom: 12px;">TODAY IS YOUR SPECIAL DAY</div>
+          <p class="message-text" style="font-size: 0.98rem; margin-bottom: 15px;">
+            Selamat 29 bby, ga cuma di hari ini aku harap kamu akan selalu sehat dan bahagia.
+          </p>
+          <button class="btn" onclick="goToSlide(4)">click here</button>
+        </div>
+
+        <div class="calendar-card">
+          <div class="calendar-header">OCTOBER</div>
+          <div class="calendar-grid">
+            <div class="calendar-day-head">S</div>
+            <div class="calendar-day-head">M</div>
+            <div class="calendar-day-head">T</div>
+            <div class="calendar-day-head">W</div>
+            <div class="calendar-day-head">T</div>
+            <div class="calendar-day-head">F</div>
+            <div class="calendar-day-head">S</div>
+            
+            <div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div>
+            <div class="calendar-day">1</div><div class="calendar-day">2</div><div class="calendar-day">3</div><div class="calendar-day">4</div>
+            <div class="calendar-day">5</div><div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div>
+            <div class="calendar-day">9</div><div class="calendar-day">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div>
+            <div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div><div class="calendar-day">16</div>
+            <div class="calendar-day">17</div><div class="calendar-day">18</div><div class="calendar-day">19</div><div class="calendar-day">20</div>
+            <div class="calendar-day">21</div><div class="calendar-day">22</div><div class="calendar-day">23</div><div class="calendar-day">24</div>
+            <div class="calendar-day">25</div><div class="calendar-day highlight">26</div><div class="calendar-day">27</div><div class="calendar-day">28</div>
+            <div class="calendar-day">29</div><div class="calendar-day">30</div><div class="calendar-day">31</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: Menu Pilihan (Message, Song, Flower) -->
+      <div class="slide" id="slide4">
+        <h2 class="menu-title">Choose a Special Gift</h2>
+        <div class="menu-grid">
+          <div class="menu-item" onclick="goToSlide(5)">
+            <div class="menu-icon">📜</div>
+            <div class="menu-text">message</div>
+          </div>
+          
+          <div class="menu-item" onclick="goToSlide(6)">
+            <div class="menu-icon">🎵</div>
+            <div class="menu-text">song</div>
+          </div>
+          
+          <div class="menu-item" onclick="goToSlide(7)">
+            <div class="menu-icon">💐</div>
+            <div class="menu-text">flower</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Message Content -->
+      <div class="slide" id="slide5">
+        <div style="width: 100%;">
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 12px; color: #5c181d;">message</h3>
+          <div class="scrollable-content">
+            <p class="message-text" style="color: #3a2528;">
+              seribu harap baik kutanam untuknya di sela bulu matanya, yang kalau bisa aku ingin tinggal di sana saja (supaya aku bisa selamanya bersamanya).<br/><br/>
+              aku ingin menghabiskan miliaran hari memandanginya tertidur. aku ingin ia sama kekalnya dengan Rudy Tabootie di kepalaku, Casper, atau Spongebob, segala tokoh kartun di televisi yang hidup selamanya di kepalaku. sebab rasanya tak bisa kubayangkan satu hari pun kulalui tanpa ia di dalamnya.<br/><br/>
+              begitu kata seorang penulis di pada kolom blog yang sering aku baca<br/><br/>
+              <strong>maka?</strong><br/>
+              maka hiduplah lebih lama seperti yang selalu aku katakan, tidak peduli seberapa jauh hal dimasala lalumu membentukmu menjadi orang yang saat ini aku kenal, aku ga pernah berharap dan ingin mengubah kamu menjadi orang lain. tapi semoga diantara doa doa yang dilangitkan oleh orang-orang terselip 1 permohonan dari aku si manusia biasa penuh dosa ini yang memohon agar kehidupan orang yang dicintainya selalu dipermudah, untuk terus bisa hidup lama bersama orang yang diinginkannya, tapi semua itu ga akan terwujud kalau ga ada tindakan dan semua pihak tau kan?. Hiduplah dengan bahagia sayang, beranjaklah dari kebiasan-kebiasan burukmu sekecil apapun itu, bukan cuma untuk aku, tapi untuk dirimu sendiri juga.
+            </p>
+          </div>
+          <button class="btn btn-dark" onclick="goToSlide(4)">back</button>
+        </div>
+      </div>
+
+     <!-- Ganti bagian Slide 6 pada HTML Anda dengan struktur ini -->
+<div class="slide" id="slide6">
+  <div style="display: flex; gap: 30px; align-items: center;">
+    <svg class="vinyl-anim" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="#111" />
+      <circle cx="50" cy="50" r="35" fill="none" stroke="#222" stroke-width="2" />
+      <circle cx="50" cy="50" r="20" fill="#e8cfa7" />
+      <circle cx="50" cy="50" r="5" fill="#111" />
+    </svg>
+
+    <div class="scrollable-content">
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px;">
+        I'd like to watch you sleeping.
+      </h3>
+      <p class="message-text" style="color: #3a2528;">
+        jika suatu hari ia merasa dirinya hanya noktah kecil di peta besar kehidupan, aku akan menunjuk ke langit dan berkata bahwa bintang pun tampak kecil dari bumi, tapi tetap menjadi penunjuk arah bagi banyak pelaut yang tersesat.<br/><br/>
+        aku tahu, tak ada yang benar-benar kekal di bumi. bahkan kartun di televisi pun suatu hari akan kehabisan jam tayang. tapi jika kekekalan berarti tinggal lama di ingatan seseorang dengan cara yang baik, maka aku ingin menjadi sesuatu seperti itu baginya.
+      </p>
+    </div>
+  </div>
+
+  <!-- Audio Player MP3 -->
+  <audio id="myAudio" loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="btn" style="background-color: #5c181d; color: #fff;" onclick="goToSlide(4)">BACK</button>
+</div>
+
+      <!-- SLIDE 7: Video Bunga -->
+      <div class="slide" id="slide7">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #f7ede2;">Making Flowers For You</h3>
+        <div class="video-frame">
+          <video id="flowerVideo" controls playsinline loop preload="metadata">
+            <source src="video bunga.mp4" type="video/mp4" />
+            <div class="media-fallback">
+              <p>Video pembuatan bunga tidak dapat dimuat di browser ini.</p>
+            </div>
+          </video>
+        </div>
+        <button class="btn" onclick="goToSlide(8)">NEXT</button>
+      </div>
+
+      <!-- SLIDE 8: Polaroid Final Photo & Quote -->
+      <div class="slide" id="slide8">
+        <div class="polaroid-card">
+          <div class="polaroid-img-container">
+            <img src="foto bunga.jpeg" 
+                 onerror="this.onerror=null; this.src='IMG_8655.jpg';" 
+                 alt="Foto Bunga Cantik" />
+          </div>
+          <div>
+            <div class="polaroid-quote">
+              <strong>Aku akan memilihmu, Seribu Kalipun.</strong><br/><br/>
+              terimakasih karena aku diizinkan untuk mencintaimu bahkan dengan cara yang paling berisik, sebab diriku sepi sekali, Sayang.
+            </div>
+          </div>
+        </div>
+        <button class="btn" style="margin-top: 15px;" onclick="goToSlide(1)">END</button>
+      </div>
+
+      <!-- YouTube Iframe API Hidden Player -->
+      <div id="player-container">
+        <div id="yt-player"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- YouTube Iframe API Script -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    let player;
+    let isPlayerReady = false;
+
+    // Inisialisasi API YouTube Player
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-player', {
+        height: '0',
+        width: '0',
+        videoId: '4OL6d6NZ3I0',
+        playerVars: {
+          'playsinline': 1,
+          'start': 94, // Detik 1:34
+          'end': 141   // Detik 2:21
+        },
+        events: {
+          'onReady': function() { isPlayerReady = true; },
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    // Ulangi musik jika durasi 1:34 - 2:21 selesai saat user di slide 6
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        const activeSlide = document.querySelector('.slide.active');
+        if (activeSlide && activeSlide.id === 'slide6') {
+          player.seekTo(94);
+          player.playVideo();
+        }
+      }
+    }
+
+    // Navigasi Slide Utama
+    function goToSlide(slideNumber) {
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach(slide => slide.classList.remove('active'));
+
+  const targetSlide = document.getElementById('slide' + slideNumber);
+  if (targetSlide) {
+    targetSlide.classList.add('active');
+  }
+
+  const audio = document.getElementById('myAudio');
+  if (slideNumber === 6) {
+    if (audio) {
+      audio.currentTime = 0; // Mulai dari awal
+      audio.play().catch(err => console.log("Autoplay blocked:", err));
+    }
+  } else {
+    if (audio) {
+      audio.pause();
+    }
+  }
+}
+  </script>
+</body>
+</html>
